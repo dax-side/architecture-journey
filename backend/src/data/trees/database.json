@@ -1,0 +1,256 @@
+{
+  "id": "database",
+  "title": "Database Selection",
+  "description": "Find the right database for your use case based on your data type, consistency needs, scale, and team experience",
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What type of data are you storing?",
+      "options": [
+        {
+          "id": "relational",
+          "label": "Structured, relational data (users, orders, posts with clear relationships)",
+          "nextQuestionId": "q2",
+          "scores": {
+            "postgresql": 3,
+            "mysql": 3,
+            "mongodb": 0,
+            "redis": 0
+          }
+        },
+        {
+          "id": "documents",
+          "label": "Flexible documents/JSON (content, logs, varied structure)",
+          "nextQuestionId": "q3",
+          "scores": {
+            "postgresql": 1,
+            "mysql": 0,
+            "mongodb": 3,
+            "redis": 0
+          }
+        },
+        {
+          "id": "keyvalue",
+          "label": "Simple key-value pairs (cache, sessions, real-time data)",
+          "nextQuestionId": "q4",
+          "scores": {
+            "postgresql": 0,
+            "mysql": 0,
+            "mongodb": 0,
+            "redis": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "How important is data consistency and ACID transactions?",
+      "options": [
+        {
+          "id": "critical",
+          "label": "Critical - Banking, payments, financial transactions",
+          "nextQuestionId": "q5",
+          "scores": {
+            "postgresql": 3,
+            "mysql": 2,
+            "mongodb": 0
+          }
+        },
+        {
+          "id": "important",
+          "label": "Important but some flexibility okay - E-commerce, user data",
+          "nextQuestionId": "q5",
+          "scores": {
+            "postgresql": 2,
+            "mysql": 2,
+            "mongodb": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "Do you need complex queries or just simple lookups?",
+      "options": [
+        {
+          "id": "complex",
+          "label": "Complex queries with aggregations, joins, and analytics",
+          "nextQuestionId": "q5",
+          "scores": {
+            "mongodb": 2,
+            "postgresql": 2
+          }
+        },
+        {
+          "id": "simple",
+          "label": "Mostly simple lookups by ID or single field",
+          "nextQuestionId": "q5",
+          "scores": {
+            "mongodb": 3,
+            "postgresql": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "What's your primary use case for key-value storage?",
+      "options": [
+        {
+          "id": "cache",
+          "label": "Caching frequently accessed data to reduce database load",
+          "nextQuestionId": null,
+          "scores": {
+            "redis": 4
+          }
+        },
+        {
+          "id": "sessions",
+          "label": "Session storage for user authentication and state",
+          "nextQuestionId": null,
+          "scores": {
+            "redis": 3
+          }
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time analytics, counters, or leaderboards",
+          "nextQuestionId": null,
+          "scores": {
+            "redis": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "What's your expected scale in 6 months?",
+      "options": [
+        {
+          "id": "small",
+          "label": "< 10k users, low traffic (startup/MVP)",
+          "nextQuestionId": "q6",
+          "scores": {
+            "postgresql": 1,
+            "mysql": 1,
+            "mongodb": 1
+          }
+        },
+        {
+          "id": "medium",
+          "label": "10k-100k users, moderate traffic (growing product)",
+          "nextQuestionId": "q6",
+          "scores": {
+            "postgresql": 2,
+            "mysql": 1,
+            "mongodb": 2
+          }
+        },
+        {
+          "id": "large",
+          "label": "100k+ users, high traffic (established product)",
+          "nextQuestionId": "q6",
+          "scores": {
+            "postgresql": 1,
+            "mysql": 1,
+            "mongodb": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "What's your team's experience level with databases?",
+      "options": [
+        {
+          "id": "beginner",
+          "label": "New to databases, prefer simple setup and good documentation",
+          "nextQuestionId": null,
+          "scores": {
+            "postgresql": 2,
+            "mongodb": 2,
+            "mysql": 1
+          }
+        },
+        {
+          "id": "intermediate",
+          "label": "Comfortable with SQL and can handle moderate complexity",
+          "nextQuestionId": null,
+          "scores": {
+            "postgresql": 3,
+            "mysql": 2,
+            "mongodb": 1
+          }
+        },
+        {
+          "id": "advanced",
+          "label": "Experienced with complex setups, optimization, and scaling",
+          "nextQuestionId": null,
+          "scores": {
+            "postgresql": 2,
+            "mysql": 1,
+            "mongodb": 2
+          }
+        }
+      ]
+    }
+  ],
+  "results": {
+    "postgresql": {
+      "name": "PostgreSQL",
+      "reasoning": "PostgreSQL is perfect for your use case because you need strong consistency, relational data modeling, and complex queries. It's the most feature-rich open-source database with excellent ACID compliance, making it ideal for applications where data integrity is paramount. PostgreSQL excels at handling complex relationships and provides powerful features like JSONB support, full-text search, and advanced indexing.",
+      "tradeoffs": [
+        "Harder to scale horizontally than NoSQL options - requires sharding or read replicas",
+        "Requires careful index management at scale to maintain performance",
+        "More complex setup and maintenance compared to simpler databases",
+        "Higher memory usage than MySQL for similar workloads"
+      ],
+      "whenToReconsider": "If you hit 100k+ concurrent users and need horizontal scaling, consider adding read replicas first, then potentially sharding or moving to a distributed SQL database like CockroachDB. If your schema becomes too flexible and you're fighting the relational model, consider MongoDB.",
+      "bestFor": "E-commerce platforms, SaaS applications, financial systems, CRM systems, any application with complex relationships and strong consistency requirements"
+    },
+    "mongodb": {
+      "name": "MongoDB",
+      "reasoning": "MongoDB fits your needs for flexible schema, document storage, and horizontal scalability. It's perfect for applications with evolving data structures and rapid development cycles. MongoDB excels at handling unstructured or semi-structured data, makes it easy to scale horizontally through sharding, and provides powerful aggregation pipelines for analytics.",
+      "tradeoffs": [
+        "Weaker consistency guarantees than SQL databases by default",
+        "Can be expensive at scale with MongoDB Atlas pricing",
+        "Joins (lookups) are less efficient than relational databases",
+        "Schema flexibility can lead to data inconsistencies without discipline",
+        "Larger storage footprint due to document model"
+      ],
+      "whenToReconsider": "If you find yourself doing lots of complex joins or need strict ACID transactions across multiple documents, PostgreSQL might be better. If costs become prohibitive on Atlas, consider self-hosting or switching to PostgreSQL with JSONB.",
+      "bestFor": "Content management systems, product catalogs, real-time analytics, mobile app backends, IoT data collection, applications with rapidly changing requirements"
+    },
+    "redis": {
+      "name": "Redis",
+      "reasoning": "Redis is ideal for your use case requiring ultra-fast access to simple key-value data. As an in-memory data store, Redis provides sub-millisecond latency and is perfect for caching, sessions, and real-time features. It supports advanced data structures like sorted sets, making it excellent for leaderboards, counters, and pub/sub messaging.",
+      "tradeoffs": [
+        "Data must fit in memory - can be expensive at large scale",
+        "Not suitable as a primary database for most applications",
+        "Limited query capabilities compared to SQL or document databases",
+        "Requires careful memory management and eviction policies",
+        "Persistence can impact performance if not configured properly"
+      ],
+      "whenToReconsider": "If your data doesn't fit in memory or you need complex queries, use Redis alongside a primary database (PostgreSQL/MongoDB) for caching only. If you need durability guarantees for all data, consider a disk-based database instead.",
+      "bestFor": "Caching layers, session storage, pub/sub messaging, rate limiting, real-time leaderboards, temporary data storage, job queues"
+    },
+    "mysql": {
+      "name": "MySQL",
+      "reasoning": "MySQL is a solid choice for relational data with good performance and wide adoption. It's battle-tested, has excellent tooling support, and is easier to find developers for. MySQL is particularly strong for read-heavy workloads and has good replication support for scaling reads.",
+      "tradeoffs": [
+        "Less feature-rich than PostgreSQL (fewer advanced data types)",
+        "Some advanced features require paid versions (MySQL Enterprise)",
+        "JSON support not as robust as PostgreSQL's JSONB",
+        "Weaker support for complex queries and window functions"
+      ],
+      "whenToReconsider": "If you need advanced features like full-text search, better JSON handling, more sophisticated window functions, or LISTEN/NOTIFY, PostgreSQL is a better choice. For most modern applications, PostgreSQL has become the default SQL choice.",
+      "bestFor": "Traditional web applications, WordPress-like systems, read-heavy workloads, legacy application migrations, simple CRUD applications"
+    }
+  },
+  "metadata": {
+    "created": "2025-10-17T00:00:00.000Z",
+    "lastUpdated": "2025-10-17T00:00:00.000Z",
+    "author": "Architecture Journey Team"
+  }
+}

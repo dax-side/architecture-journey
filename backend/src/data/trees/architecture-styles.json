@@ -1,0 +1,463 @@
+{
+  "id": "architecture-styles",
+  "title": "Architecture Style Selection",
+  "description": "Choose the right architectural style based on your scalability needs, team structure, deployment constraints, and system characteristics",
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "What is your primary architectural driver?",
+      "description": "What's the most important quality attribute for your system?",
+      "options": [
+        {
+          "id": "scalability",
+          "label": "Scalability - Need to handle massive traffic and scale independently",
+          "nextQuestionId": "q2",
+          "scores": {
+            "microservices": 3,
+            "service_based": 2,
+            "event_driven": 3,
+            "layered": 0,
+            "modular_monolith": 1
+          }
+        },
+        {
+          "id": "simplicity",
+          "label": "Simplicity - Easy to build, deploy, and maintain",
+          "nextQuestionId": "q3",
+          "scores": {
+            "microservices": 0,
+            "service_based": 1,
+            "event_driven": 0,
+            "layered": 3,
+            "modular_monolith": 3
+          }
+        },
+        {
+          "id": "flexibility",
+          "label": "Flexibility - Frequent changes and rapid iteration",
+          "nextQuestionId": "q4",
+          "scores": {
+            "microservices": 2,
+            "service_based": 2,
+            "event_driven": 1,
+            "layered": 1,
+            "modular_monolith": 2
+          }
+        },
+        {
+          "id": "performance",
+          "label": "Performance - Low latency and high throughput",
+          "nextQuestionId": "q5",
+          "scores": {
+            "microservices": 1,
+            "service_based": 2,
+            "event_driven": 3,
+            "layered": 2,
+            "modular_monolith": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "How will different parts of your system scale?",
+      "options": [
+        {
+          "id": "different_rates",
+          "label": "Different components need to scale independently at different rates",
+          "nextQuestionId": "q6",
+          "scores": {
+            "microservices": 4,
+            "service_based": 2,
+            "event_driven": 3
+          }
+        },
+        {
+          "id": "uniformly",
+          "label": "The entire system scales roughly uniformly",
+          "nextQuestionId": "q6",
+          "scores": {
+            "microservices": 1,
+            "service_based": 3,
+            "event_driven": 2,
+            "modular_monolith": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "What is your team's size and structure?",
+      "options": [
+        {
+          "id": "small_team",
+          "label": "Small team (1-5 developers) or solo developer",
+          "nextQuestionId": "q7",
+          "scores": {
+            "microservices": 0,
+            "service_based": 1,
+            "layered": 3,
+            "modular_monolith": 3
+          }
+        },
+        {
+          "id": "medium_team",
+          "label": "Medium team (5-20 developers), can split into sub-teams",
+          "nextQuestionId": "q7",
+          "scores": {
+            "microservices": 2,
+            "service_based": 3,
+            "layered": 2,
+            "modular_monolith": 2
+          }
+        },
+        {
+          "id": "large_team",
+          "label": "Large organization (20+ developers) with multiple teams",
+          "nextQuestionId": "q7",
+          "scores": {
+            "microservices": 3,
+            "service_based": 2,
+            "modular_monolith": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "How often do you need to deploy changes?",
+      "options": [
+        {
+          "id": "very_frequent",
+          "label": "Multiple times per day - CI/CD with independent deployments",
+          "nextQuestionId": "q8",
+          "scores": {
+            "microservices": 3,
+            "service_based": 2,
+            "event_driven": 2
+          }
+        },
+        {
+          "id": "frequent",
+          "label": "Few times per week - Regular releases",
+          "nextQuestionId": "q8",
+          "scores": {
+            "microservices": 2,
+            "service_based": 3,
+            "modular_monolith": 2,
+            "layered": 2
+          }
+        },
+        {
+          "id": "infrequent",
+          "label": "Monthly or less - Stable releases",
+          "nextQuestionId": "q8",
+          "scores": {
+            "layered": 3,
+            "modular_monolith": 3,
+            "service_based": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "What type of performance is most critical?",
+      "options": [
+        {
+          "id": "low_latency",
+          "label": "Low latency - Sub-millisecond response times",
+          "nextQuestionId": "q9",
+          "scores": {
+            "event_driven": 3,
+            "modular_monolith": 3,
+            "layered": 2
+          }
+        },
+        {
+          "id": "high_throughput",
+          "label": "High throughput - Processing millions of requests",
+          "nextQuestionId": "q9",
+          "scores": {
+            "event_driven": 4,
+            "microservices": 2,
+            "service_based": 2
+          }
+        },
+        {
+          "id": "async_processing",
+          "label": "Async processing - Background jobs and event handling",
+          "nextQuestionId": "q9",
+          "scores": {
+            "event_driven": 4,
+            "microservices": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "How comfortable is your team with distributed systems?",
+      "options": [
+        {
+          "id": "expert",
+          "label": "Expert - Experienced with distributed transactions, eventual consistency",
+          "nextQuestionId": "q10",
+          "scores": {
+            "microservices": 3,
+            "event_driven": 3
+          }
+        },
+        {
+          "id": "intermediate",
+          "label": "Intermediate - Some experience, willing to learn",
+          "nextQuestionId": "q10",
+          "scores": {
+            "microservices": 1,
+            "service_based": 3,
+            "event_driven": 2
+          }
+        },
+        {
+          "id": "beginner",
+          "label": "Beginner - Prefer simple, straightforward architectures",
+          "nextQuestionId": "q10",
+          "scores": {
+            "modular_monolith": 3,
+            "layered": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "What is your deployment environment?",
+      "options": [
+        {
+          "id": "cloud_native",
+          "label": "Cloud-native with Kubernetes/containers and DevOps culture",
+          "nextQuestionId": "q10",
+          "scores": {
+            "microservices": 3,
+            "service_based": 2,
+            "event_driven": 2
+          }
+        },
+        {
+          "id": "cloud_simple",
+          "label": "Cloud platform (AWS/Azure/GCP) with simple deployment",
+          "nextQuestionId": "q10",
+          "scores": {
+            "service_based": 3,
+            "modular_monolith": 2,
+            "layered": 2
+          }
+        },
+        {
+          "id": "traditional",
+          "label": "Traditional servers or limited infrastructure",
+          "nextQuestionId": "q10",
+          "scores": {
+            "layered": 3,
+            "modular_monolith": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "How important is fault isolation?",
+      "description": "Can one component failure bring down the entire system?",
+      "options": [
+        {
+          "id": "critical",
+          "label": "Critical - Components must fail independently",
+          "nextQuestionId": "q10",
+          "scores": {
+            "microservices": 3,
+            "service_based": 2,
+            "event_driven": 2
+          }
+        },
+        {
+          "id": "moderate",
+          "label": "Moderate - Some isolation needed but not critical",
+          "nextQuestionId": "q10",
+          "scores": {
+            "service_based": 3,
+            "modular_monolith": 2,
+            "microservices": 1
+          }
+        },
+        {
+          "id": "not_important",
+          "label": "Not important - Acceptable for system to fail together",
+          "nextQuestionId": "q10",
+          "scores": {
+            "layered": 2,
+            "modular_monolith": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "Do you need asynchronous processing or event streaming?",
+      "options": [
+        {
+          "id": "yes_core",
+          "label": "Yes - Core requirement with message queues/event streams",
+          "nextQuestionId": "q10",
+          "scores": {
+            "event_driven": 4,
+            "microservices": 2
+          }
+        },
+        {
+          "id": "yes_some",
+          "label": "Yes - Some background jobs and async tasks",
+          "nextQuestionId": "q10",
+          "scores": {
+            "event_driven": 2,
+            "service_based": 2,
+            "modular_monolith": 2
+          }
+        },
+        {
+          "id": "no",
+          "label": "No - Mostly synchronous request-response",
+          "nextQuestionId": "q10",
+          "scores": {
+            "layered": 2,
+            "modular_monolith": 2,
+            "service_based": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "What is your data consistency requirement?",
+      "options": [
+        {
+          "id": "strong",
+          "label": "Strong consistency - ACID transactions required",
+          "nextQuestionId": null,
+          "scores": {
+            "layered": 3,
+            "modular_monolith": 3,
+            "service_based": 1,
+            "microservices": 0
+          }
+        },
+        {
+          "id": "eventual",
+          "label": "Eventual consistency - Can tolerate temporary inconsistencies",
+          "nextQuestionId": null,
+          "scores": {
+            "microservices": 3,
+            "event_driven": 3,
+            "service_based": 2
+          }
+        },
+        {
+          "id": "mixed",
+          "label": "Mixed - Some parts need strong, others can be eventual",
+          "nextQuestionId": null,
+          "scores": {
+            "service_based": 3,
+            "microservices": 2,
+            "modular_monolith": 2
+          }
+        }
+      ]
+    }
+  ],
+  "results": {
+    "microservices": {
+      "name": "Microservices Architecture",
+      "reasoning": "Best for large-scale systems that need independent deployment, scaling, and fault isolation. Each service is a separate deployable unit with its own database.",
+      "tradeoffs": [
+        "✅ Independent scalability per service",
+        "✅ Technology diversity - different tech per service",
+        "✅ Fault isolation - one service failure doesn't crash all",
+        "✅ Independent deployment and CI/CD",
+        "❌ High operational complexity (monitoring, deployment)",
+        "❌ Distributed system challenges (network latency, transactions)",
+        "❌ Requires DevOps expertise and infrastructure",
+        "❌ Data consistency is harder (eventual consistency)"
+      ],
+      "whenToReconsider": "If your team is small (<5 people), lacks distributed systems experience, or doesn't have mature DevOps practices. Start with a modular monolith instead.",
+      "bestFor": "Large organizations (20+ devs), high-scale systems with varied scaling needs, teams experienced with distributed systems and cloud-native deployments"
+    },
+    "service_based": {
+      "name": "Service-Based Architecture",
+      "reasoning": "A middle ground between monolith and microservices. Coarse-grained services (3-12 services) with shared database or federated data. Easier to manage than microservices.",
+      "tradeoffs": [
+        "✅ Simpler than microservices but still scalable",
+        "✅ Domain-driven service boundaries",
+        "✅ Can share some data between services",
+        "✅ Good fault isolation without extreme complexity",
+        "✅ Easier to refactor into microservices later",
+        "❌ Not as fine-grained scalability as microservices",
+        "❌ Still requires distributed system knowledge",
+        "❌ Shared database can become bottleneck"
+      ],
+      "whenToReconsider": "If your system is very simple and a monolith would suffice, or if you need extreme scalability that requires full microservices.",
+      "bestFor": "Medium-sized teams (5-20 devs), systems that need some scalability but not extreme, good stepping stone from monolith to microservices"
+    },
+    "event_driven": {
+      "name": "Event-Driven Architecture",
+      "reasoning": "Based on asynchronous events and message passing. Excellent for high-throughput, real-time systems with complex workflows and integrations.",
+      "tradeoffs": [
+        "✅ Highly scalable and responsive",
+        "✅ Excellent for async workflows and integrations",
+        "✅ Loose coupling between components",
+        "✅ Can handle massive throughput",
+        "✅ Great for real-time data processing",
+        "❌ Complex debugging and monitoring",
+        "❌ Eventual consistency - harder to reason about",
+        "❌ Requires message broker infrastructure (Kafka, RabbitMQ)",
+        "❌ Difficult to test and troubleshoot flows"
+      ],
+      "whenToReconsider": "If you need strong consistency, have simple synchronous workflows, or lack experience with message brokers and eventual consistency patterns.",
+      "bestFor": "Systems with heavy async processing, real-time analytics, IoT, integration-heavy systems, teams comfortable with eventual consistency"
+    },
+    "layered": {
+      "name": "Layered (N-Tier) Architecture",
+      "reasoning": "Traditional architecture with horizontal layers (presentation, business, persistence, database). Simple, well-understood, and easy to build.",
+      "tradeoffs": [
+        "✅ Very simple and well-understood",
+        "✅ Easy to build and deploy",
+        "✅ Good for CRUD applications",
+        "✅ Strong consistency with single database",
+        "✅ Low operational overhead",
+        "❌ Monolithic deployment - all or nothing",
+        "❌ Difficult to scale specific components",
+        "❌ Can become tightly coupled over time",
+        "❌ Changes require full redeployment"
+      ],
+      "whenToReconsider": "When you need independent scaling, have multiple teams working on different features, or need to deploy components independently.",
+      "bestFor": "Small teams (<5 devs), MVPs and startups, CRUD-heavy applications, systems with traditional server infrastructure, learning projects"
+    },
+    "modular_monolith": {
+      "name": "Modular Monolith",
+      "reasoning": "A monolithic deployment but with strong internal module boundaries. Best of both worlds - simplicity of monolith with flexibility to extract services later.",
+      "tradeoffs": [
+        "✅ Simple deployment and operations",
+        "✅ Strong module boundaries prevent coupling",
+        "✅ Easy to refactor into services later",
+        "✅ No distributed system complexity",
+        "✅ Fast development and testing",
+        "✅ Strong consistency with single database",
+        "❌ Still a single deployment unit",
+        "❌ Can't scale modules independently",
+        "❌ Requires discipline to maintain boundaries",
+        "❌ May need to migrate to services for extreme scale"
+      ],
+      "whenToReconsider": "When you reach extreme scale and need independent deployment, or when you have multiple teams that need complete autonomy.",
+      "bestFor": "Startups and growing companies, teams of any size with good engineering discipline, systems that may need to scale but aren't there yet, successor to layered architecture"
+    }
+  }
+}
